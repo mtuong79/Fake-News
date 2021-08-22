@@ -1,12 +1,20 @@
+# https://github.com/shaildeliwala/experiments/blob/master/streamlit.py
+# https://towardsdatascience.com/streamlit-101-an-in-depth-introduction-fc8aad9492f2
+
 import pandas as pd
 import streamlit as st
 import plotly.express as px
 
 @st.cache
 def get_data():
-    return pd.read_csv("http://data.insideairbnb.com/united-states/ny/new-york-city/2019-09-12/visualisations/listings.csv")
+    return pd.read_csv("Data/airbnb-listings.csv")
 
 df = get_data()
+df['price'] = df['price'].str.replace(',','')
+df['price'] = df['price'].str.replace('$','')
+df['price'] = pd.to_numeric(df['price'])
+df['price'] = df['price'].astype(int)
+
 st.title("Streamlit 101: An in-depth introduction")
 st.markdown("Welcome to this in-depth introduction to [Streamlit](www.streamlit.io)! For this exercise, we'll use an Airbnb [dataset](http://data.insideairbnb.com/united-states/ny/new-york-city/2019-09-12/visualisations/listings.csv) containing NYC listings.")
 st.header("Customary quote")
@@ -42,9 +50,9 @@ st.dataframe(df[cols].head(10))
 
 st.header("Average price by room type")
 st.write("You can also display static tables. As opposed to a data frame, with a static table you cannot sorting by clicking a column header.")
-st.table(df.groupby("room_type").price.mean().reset_index()\
-    .round(2).sort_values("price", ascending=False)\
-    .assign(avg_price=lambda x: x.pop("price").apply(lambda y: "%.2f" % y)))
+st.table(df.groupby("room_type").price.mean().reset_index() \
+         .round(2).sort_values("price", ascending=False) \
+         .assign(avg_price=lambda x: x.pop("price").apply(lambda y: "%.2f" % y)))
 
 st.header("Which host has the most properties listed?")
 listingcounts = df.host_id.value_counts()
@@ -54,11 +62,11 @@ st.write(f"""**{top_host_1.iloc[0].host_name}** is at the top with {listingcount
 **{top_host_2.iloc[1].host_name}** is second with {listingcounts.iloc[1]} listings. Following are randomly chosen
 listings from the two displayed as JSON using [`st.json`](https://streamlit.io/docs/api.html#streamlit.json).""")
 
-st.json({top_host_1.iloc[0].host_name: top_host_1\
-    [["name", "neighbourhood", "room_type", "minimum_nights", "price"]]\
+st.json({top_host_1.iloc[0].host_name: top_host_1 \
+    [["name", "neighbourhood", "room_type", "minimum_nights", "price"]] \
         .sample(2, random_state=4).to_dict(orient="records"),
-        top_host_2.iloc[0].host_name: top_host_2\
-    [["name", "neighbourhood", "room_type", "minimum_nights", "price"]]\
+         top_host_2.iloc[0].host_name: top_host_2 \
+             [["name", "neighbourhood", "room_type", "minimum_nights", "price"]] \
         .sample(2, random_state=4).to_dict(orient="records")})
 
 st.header("What is the distribution of property price?")
@@ -76,24 +84,24 @@ st.write("💡 Notice how we use a static table below instead of a data frame. \
 Unlike a data frame, if content overflows out of the section margin, \
 a static table does not automatically hide it inside a scrollable area. \
 Instead, the overflowing content remains visible.")
-neighborhood = st.radio("Neighborhood", df.neighbourhood_group.unique())
+neighborhood = st.radio("Neighborhood", df.neighbourhood.unique())
 show_exp = st.checkbox("Include expensive listings")
 show_exp = " and price<200" if not show_exp else ""
 
 @st.cache
 def get_availability(show_exp, neighborhood):
-    return df.query(f"""neighbourhood_group==@neighborhood{show_exp}\
-        and availability_365>0""").availability_365.describe(\
-            percentiles=[.1, .25, .5, .75, .9, .99]).to_frame().T
+    return df.query(f"""neighbourhood==@neighborhood{show_exp}\
+        and availability_365>0""").availability_365.describe( \
+        percentiles=[.1, .25, .5, .75, .9, .99]).to_frame().T
 
 st.table(get_availability(show_exp, neighborhood))
 st.write("At 169 days, Brooklyn has the lowest average availability. At 226, Staten Island has the highest average availability.\
     If we include expensive listings (price>=$200), the numbers are 171 and 230 respectively.")
 st.markdown("_**Note:** There are 18431 records with `availability_365` 0 (zero), which I've ignored._")
 
-df.query("availability_365>0").groupby("neighbourhood_group")\
+df.query("availability_365>0").groupby("neighbourhood") \
     .availability_365.mean().plot.bar(rot=0).set(title="Average availability by neighborhood group",
-        xlabel="Neighborhood group", ylabel="Avg. availability (in no. of days)")
+                                                 xlabel="Neighborhood group", ylabel="Avg. availability (in no. of days)")
 st.pyplot()
 
 st.header("Properties by number of reviews")
@@ -103,7 +111,7 @@ maximum = st.sidebar.number_input("Maximum", min_value=0, value=5)
 if minimum > maximum:
     st.error("Please enter a valid range")
 else:
-    df.query("@minimum<=number_of_reviews<=@maximum").sort_values("number_of_reviews", ascending=False)\
+    df.query("@minimum<=number_of_reviews<=@maximum").sort_values("number_of_reviews", ascending=False) \
         .head(50)[["name", "number_of_reviews", "neighbourhood", "host_name", "room_type", "price"]]
 
 st.write("486 is the highest number of reviews and two properties have it. Both are in the East Elmhurst \
