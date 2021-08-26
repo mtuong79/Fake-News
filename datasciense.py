@@ -7,7 +7,7 @@ import plotly.express as px
 
 @st.cache
 def get_data():
-    return pd.read_csv("Data/airbnb-listings.csv")
+    return pd.read_csv("airbnb-listings.csv")
 
 df = get_data()
 df['price'] = df['price'].str.replace(',','')
