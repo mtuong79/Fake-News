@@ -128,6 +128,7 @@ pics = {
 }
 pic = st.selectbox("Picture choices", list(pics.keys()), 0)
 st.image(pics[pic], use_column_width=True, caption=pics[pic])
+st.image("https://github.com/mtuong79/Streamlit/blob/39fb775f2bf7a10feb615fa96f196937d3f4bfc9/TLinh_Buf1.jpg")
 
 st.markdown("## Party time!")
 st.write("Yay! You're done with this tutorial of Streamlit. Click below to celebrate.")
