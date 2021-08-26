@@ -15,7 +15,7 @@ df['price'] = df['price'].str.replace('$','')
 df['price'] = pd.to_numeric(df['price'])
 df['price'] = df['price'].astype(int)
 
-st.title("Streamlit 101: An in-depth introduction by M.Tuong")
+st.title("Streamlit 101: An in-depth introduction")
 st.markdown("Welcome to this in-depth introduction to [Streamlit](www.streamlit.io)! For this exercise, we'll use an Airbnb [dataset](http://data.insideairbnb.com/united-states/ny/new-york-city/2019-09-12/visualisations/listings.csv) containing NYC listings.")
 st.header("Customary quote")
 st.markdown("> I just love to go home, no matter where I am, the most luxurious hotel suite in the world, I love to go home.\n\n—Michael Caine")
