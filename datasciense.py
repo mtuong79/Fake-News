@@ -123,8 +123,8 @@ st.write("486 is the highest number of reviews and two properties have it. Both 
 st.header("Images")
 pics = {
     "TLinh Buf": "img/TLinh_Buf1.jpg",
-    "Puppy": "https://cdn.pixabay.com/photo/2019/03/15/19/19/puppy-4057786_960_720.jpg",
-    "Sci-fi city": "https://storage.needpix.com/rsynced_images/science-fiction-2971848_1280.jpg"
+    "TLinh Buf2": "img/TLinh_Buf2.jpg",
+    "TLinh Buf3": "img/TLinh_Buf3.jpg"
 }
 pic = st.selectbox("Picture choices", list(pics.keys()), 0)
 st.image(pics[pic], use_column_width=True, caption=pics[pic])
