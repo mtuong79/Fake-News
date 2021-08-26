@@ -122,7 +122,7 @@ st.write("486 is the highest number of reviews and two properties have it. Both 
     A few are between $100 and $200, and only one is priced above $200.")
 st.header("Images")
 pics = {
-    "TLinh Buf": "https://github.com/mtuong79/Streamlit/blob/main/TLinh_Buf1.jpg",
+    "TLinh Buf": "img/TLinh_Buf1.jpg",
     "Puppy": "https://cdn.pixabay.com/photo/2019/03/15/19/19/puppy-4057786_960_720.jpg",
     "Sci-fi city": "https://storage.needpix.com/rsynced_images/science-fiction-2971848_1280.jpg"
 }
