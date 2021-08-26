@@ -122,9 +122,9 @@ st.write("486 is the highest number of reviews and two properties have it. Both 
     A few are between $100 and $200, and only one is priced above $200.")
 st.header("Images")
 pics = {
-    "TLinh Buf": "img/TLinh_Buf1.jpg",
+    "TLinh Buf": "img/TLinh_Buf3.jpg",
     "TLinh Buf2": "img/TLinh_Buf2.jpg",
-    "TLinh Buf3": "img/TLinh_Buf3.jpg"
+    "TLinh Buf3": "img/TLinh_Buf1.jpg"
 }
 pic = st.selectbox("Picture choices", list(pics.keys()), 0)
 st.image(pics[pic], use_column_width=True, caption=pics[pic])
