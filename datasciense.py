@@ -10,6 +10,8 @@ def get_data():
     return pd.read_csv("airbnb-listings.csv")
 
 df = get_data()
+
+# remove odd chars and $ on price
 df['price'] = df['price'].str.replace(',','')
 df['price'] = df['price'].str.replace('$','')
 df['price'] = pd.to_numeric(df['price'])
