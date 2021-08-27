@@ -4,6 +4,7 @@
 import pandas as pd
 import streamlit as st
 import plotly.express as px
+import matplotlib.pyplot as plt
 
 # @st.cache
 def get_data():
@@ -104,8 +105,7 @@ st.markdown("_**Note:** There are 18431 records with `availability_365` 0 (zero)
 df_bar = df.query("availability_365>0").groupby("neighbourhood").availability_365.mean()
 
 fig, ax = plt.subplots()
-ax = df_bar.plot.bar(rot=0).set(title="Average availability by neighborhood group",
-                                xlabel="Neighborhood group", ylabel="Avg. availability (in no. of days)")
+ax = df_bar.plot.bar(rot=0).set(title="Average availability by neighborhood group", xlabel="Neighborhood group", ylabel="Avg. availability (in no. of days)")
 st.pyplot(fig)
 
 st.header("Properties by number of reviews")
