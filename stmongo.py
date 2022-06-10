@@ -14,7 +14,7 @@ client = init_connection()
 # Uses st.experimental_memo to only rerun when the query changes or after 10 min.
 # @st.experimental_memo(ttl=600)
 def get_data():
-    db = client.mtuong
+    db = client.InkMgmt
     items = db.mycollection.find()
     items = list(items)  # make hashable for st.experimental_memo
     return items
