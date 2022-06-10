@@ -12,7 +12,7 @@ client = init_connection()
 
 # Pull data from the collection.
 # Uses st.experimental_memo to only rerun when the query changes or after 10 min.
-@st.experimental_memo(ttl=600)
+# @st.experimental_memo(ttl=600)
 def get_data():
     db = client.sample_airbnb
     items = db.mycollection.find()
